@@ -1,0 +1,107 @@
+
+#include <iostream>
+using namespace std;
+
+string antrian[5];
+int jumlahBarang[5];
+
+int front = -1, rear = -1;
+
+void tambah() {
+    if (rear == 4) {
+        cout << "\nAntrian penuh!\n";
+    } else {
+        string nama;
+        int jumlah;
+
+        cout << "Nama pelanggan: ";
+        cin >> nama;
+
+        cout << "Jumlah barang: ";
+        cin >> jumlah;
+
+        if (front == -1) {
+            front = 0;
+        }
+
+        rear++;
+        antrian[rear] = nama;
+        jumlahBarang[rear] = jumlah;
+
+        cout << nama << " masuk antrian dengan "
+             << jumlah << " barang.\n";
+    }
+}
+
+void layani() {
+    if (front == -1) {
+        cout << "Antrian kosong!\n";
+        return;
+        
+    } else {
+        cout << antrian[front] << " sedang dilayani.\n";
+        cout << "Jumlah barang: "
+             << jumlahBarang[front] << endl;
+
+        if (front == rear) {
+            front = rear = -1;
+            
+        } else {
+            for (int i = front; i < rear; i++) {
+                antrian[i] = antrian[i + 1];
+                jumlahBarang[i] = jumlahBarang[i + 1];
+            }
+
+            rear--;
+        }
+    }
+}
+
+void tampilkan() {
+    if (front == -1) {
+        cout << "Antrian kosong!\n";
+    } else {
+        cout << "Daftar antrian:\n\n";
+
+        for (int i = front; i <= rear; i++) {
+            cout << "Nama: " << antrian[i] << endl;
+            cout << "Jumlah barang: "
+                 << jumlahBarang[i] << endl;
+            cout << "-------------------\n";
+        }
+    }
+}
+
+int main() {
+    int pilih;
+
+    do {
+        cout << "\n=== ANTRIAN INDOMARET ===\n";
+        cout << "1. Tambah pelanggan\n";
+        cout << "2. Layani pelanggan\n";
+        cout << "3. Tampilkan antrian\n";
+        cout << "0. Keluar\n";
+        cout << "Pilih: ";
+        cin >> pilih;
+
+        switch (pilih) {
+            case 1:
+                tambah();
+                break;
+            case 2:
+                layani();
+                break;
+            case 3:
+                tampilkan();
+                break;
+            case 0:
+                cout << "Program selesai.\n";
+                break;
+            default:
+                cout << "Pilihan salah!\n";
+        }
+
+    } while (pilih != 0);
+
+    return 0;
+}
